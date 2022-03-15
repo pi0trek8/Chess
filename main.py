@@ -1,7 +1,5 @@
 import pygame
-import config
-import chessboard
-import piece
+import config, fen, chessboard
 
 # Update screen window
 def draw_window():
@@ -13,7 +11,7 @@ def main():
     clock = pygame.time.Clock() # Clock to keep framerate stable
     config.init_global()
     config.init_board()
-    config.init_pieces()
+    fen.load_state()
 
     run = True
     while run:
