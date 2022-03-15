@@ -1,32 +1,23 @@
 import pygame
+import config
 import chessboard
-
-# Initialize global variables
-WIDTH, HEIGHT = 820, 820
-BOARD_WIDTH, BOARD_HEIGHT = 800, 800
-WINDOW = pygame.display.set_mode((WIDTH, HEIGHT)) # Display surface(screen)
-BOARD_WINDOW = pygame.Surface((BOARD_WIDTH, BOARD_HEIGHT))
-
-FPS = 60 # Designated framerate
+import piece
 
 # Update screen window
 def draw_window():
-    chessboard.draw_board(BOARD_WINDOW, board) # Update screen
-    WINDOW.fill((150,150,150)) # Color margin(background) space
-    WINDOW.blit(BOARD_WINDOW, (10, 10))
-
-# Create 2d list of Squares in board global variable
-def init_board(): 
-    global board
-    board = chessboard.init_board(BOARD_WIDTH, BOARD_HEIGHT) # Leave part of the window outside the board
+    chessboard.draw_board(config.BOARD_WINDOW, config.board) # Update screen
+    config.WINDOW.fill((150,150,150)) # Color margin(background) space
+    config.WINDOW.blit(config.BOARD_WINDOW, (10, 10))
 
 def main():
     clock = pygame.time.Clock() # Clock to keep framerate stable
-    init_board()
+    config.init_global()
+    config.init_board()
+    config.init_pieces()
 
     run = True
     while run:
-        clock.tick(FPS)
+        clock.tick(config.FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
