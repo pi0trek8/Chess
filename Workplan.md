@@ -1,6 +1,6 @@
 1. Interfejs
-  - [ ] plansza
-  - [ ] figury
+  - [x] plansza
+  - [x] figury
   - [ ] ruchy
   - [ ] zasady
 2. Algorytm
