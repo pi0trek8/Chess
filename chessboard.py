@@ -1,10 +1,12 @@
 import pygame
+import config
 
 class Square:
     def __init__(self, x, y, size, is_white, piece):
         self.size = size
         self.x_start = x * self.size # Position of square's top left corner 
         self.y_start = y * self.size
+        self.rect = pygame.rect.Rect(x*size, y*size, size, size)
         self.is_white = is_white  # White or black boolean
         self.piece = piece
 
@@ -26,6 +28,7 @@ def init_board(square_size):
 
 # Loop over each square, create surface in square color and copy it to window at square coordinates
 def draw_board(window, board):
+    window.fill((0,0,0))
     for row in board:
         for square in row:
             surf = pygame.Surface((square.size, square.size))
@@ -35,8 +38,29 @@ def draw_board(window, board):
             else:
                 surf.fill((20, 20, 20))
 
-            if square.piece != None:
-                surf.blit(square.piece.graphic, (0,0)) # Copy piece image onto the square surface
+            window.blit(surf, (square.x_start, square.y_start)) # Paste colored square to the board window
 
-            window.blit(surf, (square.x_start, square.y_start))
-    pygame.display.update()
+def draw_pieces(window, board):  # Copy piece image onto the window surface
+    for row in board:
+        for square in row:        
+            if square.piece != None:
+                piece = square.piece
+                if piece.drag: # Use exact position if piece is dragged
+                    window.blit(piece.graphic, (piece.rect.x, piece.rect.y))
+                else: # Draw it on correct square otherwise
+                    window.blit(piece.graphic, (piece.square.x_start, piece.square.y_start))
+
+def square_clicked(event):
+    for row in config.board:
+        for square in row:
+            if square.rect.collidepoint(event.pos):
+                return square
+    return None
+
+def piece_clicked(event):
+    for row in config.board:
+        for square in row:
+            if square.piece != None:
+                if square.piece.rect.collidepoint(event.pos):
+                    return square.piece
+    return None
