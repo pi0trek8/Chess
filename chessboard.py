@@ -35,8 +35,10 @@ def draw_board(window, board):
             surf = pygame.Surface((square.size, square.size))
 
             if square.is_white:
+                #color of white square
                 surf.fill((240, 240, 240))
             else:
+                #color of black square
                 surf.fill((20, 20, 20))
 
             window.blit(surf, (square.x_start, square.y_start)) # Paste colored square to the board window
