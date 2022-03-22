@@ -1,12 +1,13 @@
 import pygame
 import config
+import time
 
 class Square:
     def __init__(self, x, y, size, is_white, piece):
         self.size = size
         self.x_start = x * self.size # Position of square's top left corner 
         self.y_start = y * self.size
-        self.rect = pygame.rect.Rect(x*size, y*size, size, size)
+        self.rect = pygame.rect.Rect(self.x_start + config.OFFSET , self.y_start + config.OFFSET, size, size)
         self.is_white = is_white  # White or black boolean
         self.piece = piece
 
@@ -45,10 +46,7 @@ def draw_pieces(window, board):  # Copy piece image onto the window surface
         for square in row:        
             if square.piece != None:
                 piece = square.piece
-                if piece.drag: # Use exact position if piece is dragged
-                    window.blit(piece.graphic, (piece.rect.x, piece.rect.y))
-                else: # Draw it on correct square otherwise
-                    window.blit(piece.graphic, (piece.square.x_start, piece.square.y_start))
+                window.blit(piece.graphic, (piece.rect.x, piece.rect.y))
 
 def square_clicked(event):
     for row in config.board:
@@ -64,3 +62,10 @@ def piece_clicked(event):
                 if square.piece.rect.collidepoint(event.pos):
                     return square.piece
     return None
+
+def show_squares():
+    for num, row in enumerate(config.board):
+        for square in row:
+            pygame.draw.rect(config.WINDOW, (0,240,0), square.rect)
+            pygame.display.update()
+            time.sleep(0.07)

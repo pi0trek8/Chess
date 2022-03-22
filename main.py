@@ -4,16 +4,17 @@ import config, fen, chessboard
 # Update screen window
 def draw_window():
     chessboard.draw_board(config.BOARD_WINDOW, config.board) # Update screen
-    chessboard.draw_pieces(config.BOARD_WINDOW, config.board)
     config.WINDOW.fill((150,150,150)) # Color margin(background) space
     config.WINDOW.blit(config.BOARD_WINDOW, (10, 10))
+    chessboard.draw_pieces(config.WINDOW, config.board)
     pygame.display.update()
 
 def main():
     clock = pygame.time.Clock() # Clock to keep framerate stable
     config.init_global()
-    config.init_board() 
+    config.init_board()
     fen.load_state()
+    #fen.load_state("8/8/8/3p4/4P3/8/8/8")
 
     run = True
     piece = None
